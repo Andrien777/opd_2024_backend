@@ -1,0 +1,36 @@
+Конфигурация Frontend
+файл
+.env.local:
+
+NEXT_PUBLIC_API_URL_BASE=http://localhost:8085/api/
+NEXT_PUBLIC_AUTH_URL_BASE=http://localhost:8080/realms/master/protocol/openid-connect/
+NEXT_PUBLIC_AUTH_CLIENT=front-login
+
+Конфигурация Backend 
+файл .env.local или переменные среды:
+DATABASE_URL=jdbc:postgresql://localhost:5433/postgres
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=postgres024
+KEYCLOAK_CLIENT_ID=backend
+KEYCLOAK_CLIENT_SECRET=*SecretKey*
+KEYCLOAK_URI=http://localhost:8080/realms/master
+PORT=8081
+
+Конфигурация Load Balancer:
+файл application.yml
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+
+Также настраиваются пути в классах ReadOnlyServerInstanceSupplier (Балансируемые Read-Only сервера)
+и GatewayApplication (Мастер-сервер). Примеры содержатся в стандартной конфигурации исходного кода.
+
